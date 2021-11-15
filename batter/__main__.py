@@ -1,3 +1,5 @@
+import os
+os.environ['RAYLIB_BIN_PATH'] = r'C:\Users\flipp\cse-210-solo-checkpoints\cse210-student-solo-checkpoints\07-snake\raylib-2.0.0-Win64-mingw\raylib-2.0.0-Win64-mingw\lib'
 import random
 from game import constants
 from game.director import Director
@@ -8,6 +10,7 @@ from game.input_service import InputService
 from game.output_service import OutputService
 from game.physics_service import PhysicsService
 from game.audio_service import AudioService
+from game.brick import Brick
 
 # TODO: Add imports similar to the following when you create these classes
 # from game.brick import Brick
@@ -18,6 +21,7 @@ from game.audio_service import AudioService
 # from game.handle_off_screen_action import HandleOffScreenAction
 # from game.move_actors_action import MoveActorsAction
 
+
 def main():
 
     # create the cast {key: tag, value: list}
@@ -25,6 +29,20 @@ def main():
 
     cast["bricks"] = []
     # TODO: Create bricks here and add them to the list
+    brick1 = Brick()
+    brick1.set_position(Point(10,10))
+    cast["bricks"].append(brick1)
+    brick2 = Brick()
+    brick2.set_position(Point(100,10))
+    cast["bricks"].append(brick2)
+    brick3 = Brick()
+    brick3.set_position(Point(200,10))
+    cast["bricks"].append(brick3)
+
+    for brick in cast["bricks"]:
+        print(brick.get_position()._x)
+        print(brick.get_position()._y)
+
 
     cast["balls"] = []
     # TODO: Create a ball here and add it to the list
