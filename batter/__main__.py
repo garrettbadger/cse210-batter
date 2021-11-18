@@ -1,5 +1,11 @@
 import os
 
+# from batter.game import handle_off_screen_action
+
+# from batter.game import move_actors_action
+
+# from batter.game.constants import MAX_X
+
 # from batter.game.constants import BRICK_HEIGHT, BRICK_WIDTH
 os.environ['RAYLIB_BIN_PATH'] = r'C:\Users\flipp\cse-210-solo-checkpoints\cse210-student-solo-checkpoints\07-snake\raylib-2.0.0-Win64-mingw\raylib-2.0.0-Win64-mingw\lib'
 import random
@@ -13,15 +19,17 @@ from game.output_service import OutputService
 from game.physics_service import PhysicsService
 from game.audio_service import AudioService
 from game.brick import Brick
+from game.ball import Ball
+from game.move_actors_action import MoveActorsAction
+from game.handle_off_screen_action import HandleOffScreenAction
 
 # TODO: Add imports similar to the following when you create these classes
-# from game.brick import Brick
-# from game.ball import Ball
+
+ 
 # from game.paddle import Paddle
 # from game.control_actors_action import ControlActorsAction
 # from game.handle_collisions_action import HandleCollisionsAction
-# from game.handle_off_screen_action import HandleOffScreenAction
-# from game.move_actors_action import MoveActorsAction
+#
 
 
 def main():
@@ -33,12 +41,15 @@ def main():
     # TODO: Create bricks here and add them to the list
     
     bricks = []
-    for x in range(20, 750, constants.BRICK_WIDTH):
-        for y in range(0, 200, constants.BRICK_HEIGHT):
+    for x in range(20, 750, constants.BRICK_WIDTH + constants.BRICK_SPACE):
+        for y in range(0, 200, constants.BRICK_HEIGHT + constants.BRICK_SPACE):
             brick = Brick()
+            brick.set_height(constants.BRICK_HEIGHT)
+            brick.set_width(constants.BALL_WIDTH)
+            brick.set_image(constants.IMAGE_BRICK)
             position = Point(x, y)
             brick.set_position(position)
-            brick.set_image(constants.IMAGE_BRICK)
+            
             bricks.append(brick)
 
             
@@ -46,38 +57,19 @@ def main():
     cast['bricks'] = bricks
 
         
-        
 
-
-
-
-    # brick1 = Brick()
-    # brick1.set_position(Point(10,10))
-    # brick1.set_image(constants.IMAGE_BRICK)
-    # brick1.set_height(constants.BRICK_HEIGHT)
-    # brick1.set_width(constants.BRICK_WIDTH)
-    # cast["bricks"].append(brick1)
-    
-    # brick2 = Brick()
-    # brick2.set_position(Point(100,10))
-    # brick2.set_image(constants.IMAGE_BRICK)
-    # brick2.set_height(constants.BRICK_HEIGHT)
-    # brick2.set_width(constants.BRICK_WIDTH)
-    # cast["bricks"].append(brick2)
-    # brick3 = Brick()
-    # brick3.set_position(Point(200,10))
-    # brick3.set_image(constants.IMAGE_BRICK)
-    # brick3.set_height(constants.BRICK_HEIGHT)
-    # brick3.set_width(constants.BRICK_WIDTH)
-    # cast["bricks"].append(brick3)
-
-    # for brick in cast["bricks"]:
-    #     print(brick.get_position()._x)
-    #     print(brick.get_position()._y)
-
-
-    cast["balls"] = []
+    # cast["balls"] = []
     # TODO: Create a ball here and add it to the list
+    balls = []
+    ball = Ball()
+    ball.set_image(constants.IMAGE_BALL)
+    ball.set_height(constants.BALL_HEIGHT)
+    ball.set_width(constants.BALL_WIDTH)
+    ball.set_position(Point((constants.MAX_X + 2), (constants.MAX_Y / 2)))
+    ball.set_velocity(Point(constants.BALL_DX, constants.BALL_DY))
+    balls.append(ball)
+    
+    cast['balls'] = balls
 
     cast["paddle"] = []
     # TODO: Create a paddle here and add it to the list
@@ -92,11 +84,12 @@ def main():
     audio_service = AudioService()
 
     draw_actors_action = DrawActorsAction(output_service)
-
+    move_actors_action = MoveActorsAction()
+    handle_off_screen_action = HandleOffScreenAction()
     # TODO: Create additional actions here and add them to the script
 
     script["input"] = []
-    script["update"] = []
+    script["update"] = [move_actors_action, handle_off_screen_action]
     script["output"] = [draw_actors_action]
 
 
