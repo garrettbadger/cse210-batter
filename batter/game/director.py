@@ -1,6 +1,7 @@
 from time import sleep
 
 import raylibpy
+from game.handle_off_screen_action import HandleOffScreenAction
 from game import constants
 
 class Director:
@@ -25,6 +26,7 @@ class Director:
         self._cast = cast
         self._script = script
         self._keep_playing = True
+        self.game = HandleOffScreenAction()
         
     def start_game(self):
         """Starts the game loop to control the sequence of play."""
@@ -34,9 +36,13 @@ class Director:
             self._cue_action("output")
 
             # TODO: Add some logic like the following to handle game over conditions
-            # if len(self._cast["balls"]) == 0:
-            #     # Game over
-            #     self._keep_playing = False
+            if len(self._cast["bricks"]) <= 1:
+                # Game over
+                self._keep_playing = False
+
+            if self.game.game_over == True:
+                self._keep_playing = False
+            
 
             if raylibpy.window_should_close():
                 self._keep_playing = False
@@ -47,6 +53,10 @@ class Director:
         
         Args:
             tag (string): The given tag.
+
         """ 
+        
         for action in self._script[tag]:
             action.execute(self._cast)
+
+            

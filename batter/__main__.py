@@ -1,16 +1,5 @@
 import os
 
-# from batter.game import handle_collisions_action
-
-# from batter.game import control_actors_action
-
-# from batter.game import handle_off_screen_action
-
-# from batter.game import move_actors_action
-
-# from batter.game.constants import MAX_X
-
-# from batter.game.constants import BRICK_HEIGHT, BRICK_WIDTH
 os.environ['RAYLIB_BIN_PATH'] = r'C:\Users\flipp\cse-210-solo-checkpoints\cse210-student-solo-checkpoints\07-snake\raylib-2.0.0-Win64-mingw\raylib-2.0.0-Win64-mingw\lib'
 import random
 from game import constants
@@ -32,9 +21,6 @@ from game.handle_collisions_action import HandleCollisionsAction
 
 # TODO: Add imports similar to the following when you create these classes
 
- 
-
-#
 
 
 def main():
@@ -48,10 +34,12 @@ def main():
     bricks = []
     for x in range(20, 750, constants.BRICK_WIDTH + constants.BRICK_SPACE):
         for y in range(0, 200, constants.BRICK_HEIGHT + constants.BRICK_SPACE):
+            colors = [constants.IMAGE_BRICK0, constants.IMAGE_BRICK1, constants.IMAGE_BRICK2, constants.IMAGE_BRICK3, constants.IMAGE_BRICK4, constants.IMAGE_BRICK5, constants.IMAGE_BRICK6]
+            color = random.choice(colors)
             brick = Brick()
             brick.set_height(constants.BRICK_HEIGHT)
             brick.set_width(constants.BALL_WIDTH)
-            brick.set_image(constants.IMAGE_BRICK)
+            brick.set_image(color)
             position = Point(x, y)
             brick.set_position(position)
             
