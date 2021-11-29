@@ -26,7 +26,7 @@ class Director:
         self._cast = cast
         self._script = script
         self._keep_playing = True
-        self.game = HandleOffScreenAction()
+        # self.game = HandleOffScreenAction()
         
     def start_game(self):
         """Starts the game loop to control the sequence of play."""
@@ -40,7 +40,7 @@ class Director:
                 # Game over
                 self._keep_playing = False
 
-            if self.game.game_over == True:
+            if len(self._cast['balls']) == 0:
                 self._keep_playing = False
             
 

@@ -7,10 +7,7 @@ class HandleOffScreenAction(Action):
         super().__init__()
         self.game_over = False
         
-    def test_keep_playing(self, ball):
-
-        if ball.get_bottom_edge() >= constants.MAX_Y:
-            self.game_over = True
+    
 
     def execute(self, cast):
         ball = cast['balls'][0]
@@ -27,9 +24,11 @@ class HandleOffScreenAction(Action):
                     ball.set_velocity(Point(velocity.get_x(), (velocity.get_y() * -1)))
                 elif ball.get_right_edge() >= constants.MAX_X or ball.get_left_edge() <= 0:
                     ball.set_velocity(Point((velocity.get_x() * -1), velocity.get_y()))
+                
+                if ball.get_bottom_edge() >= constants.MAX_Y:
+                    ball.remove(ball)
 
-        return self.test_keep_playing(ball)
-
+        
     
                        
                 
